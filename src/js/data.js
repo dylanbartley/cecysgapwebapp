@@ -34,7 +34,26 @@ if ('indexedDB' in window) {
       });
     }
   };
+} else if ('localStorage' in window) {
+  module.exports = {
+    writeData: function ( storeName, data ) {
+      return new Promise(function ( resovle, reject ) {
+        setTimeout(function () {
+          var store = JSON.parse(window.localStorage.getItem(storeName)) || [];
+          store.push(data);
+          //
+          window.localStorage.setItem(storeName, JSON.stringify(store));
+          //
+          resovle();
+        }, 1);
+      });
+    },
+    readData: function ( storeName ) {
+      return Promise.resolve(JSON.parse(window.localStorage.getItem(storeName)) || []);
+    }
+  };
 } else {
+  console.warn('neither IndexedDB API nor WebStorage API are supported');
   module.exports = {
     writeData: function ( storeName, data ) { return Promise.resolve(null); },
     readData: function ( storeName ) { return Promise.resolve(null); }
