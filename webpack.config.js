@@ -19,8 +19,7 @@ function postCss () {
 module.exports = env => {
   return {
     entry: {
-      main: './src/main.js',
-      sw: './src/sw.js'
+      main: './src/main.js'
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
