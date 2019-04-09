@@ -1,7 +1,7 @@
 require('promise-polyfill');
 require('whatwg-fetch'); // fetch api polyfill
 
-/* global fetch */
+/* global fetch grecaptcha */
 var $ = window.jQuery = require('jquery/dist/jquery.slim.min.js');
 // tweaked boostrap to use globally defined 'jQuery' as opposed to require('jquery')
 require('./lib/bootstrap/bootstrap.js');
@@ -145,14 +145,18 @@ var CGApp = (function () {
   };
   
   this.orderComplete = function () {
+    this.closeModal();
+    // reset cgapp form logic
     this.isInputReady = false;
     this.isRecapReady = false;
-    this.closeModal();
     this.formReady();
+    // reset form html
     $('form')[0].reset();
     $('.form-control')
       .parent()
       .removeClass('was-validated');
+    // reset captcha
+    grecaptcha.reset();
   };
   
   // send order to backend
