@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CecysGap</title>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <!-- some header image only for desktops -->
+    </header>
+    ${require('./partials/nav.html')}
+  
+    <div class="container content">
+  
+      <section class="main">
+        <div class="card">
+          <div class="card-body">
+            <p>Good food to fill your belly</p>
+          </div> 
+        </div>
+      </section>
+      
+      ${require('./partials/news.html')}
+      
+      ${require('./partials/menu.html')}
+      
+      ${require('./partials/footer.html')}
+      
+      <div class="action-container">
+        <button type="button" class="btn btn-lg btn-block btn-secondary action-button" onclick="cgapp.openModal('placeorder')">Order Now</button>
+      </div>
+  
+    </div>
+    
+    <!-- pop up modals -->
+    ${require('./partials/modals/place-order.html')}
+    ${require('./partials/modals/orders.html')}
+    ${require('./partials/modals/info.html')}
+  </div>
+</body>
+</html>

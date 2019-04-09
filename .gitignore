@@ -1,0 +1,6 @@
+# AWS C9
+.c9
+
+# nodejs
+node_modules
+*lock.json

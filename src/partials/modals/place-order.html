@@ -1,0 +1,39 @@
+<div id="placeorderModal" class="app-modal">
+  <div class="container">
+    <div class="card">
+      <div class="card-header">Order Here <a href="#" class="close mod-close text-info" onclick="cgapp.closeModal()">&times;</a></div>
+      <div class="card-body">
+        <p>notes about ordering</p>
+        <hr />
+        <form>
+          <div class="mb-3">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control form-control-sm" id="name" placeholder="Enter Your Full Name" pattern="[A-Za-z -]{6,50}" maxlength="50" required />
+            <div class="invalid-feedback">Name is invalid</div>
+          </div>
+          <div class="mb-3">
+            <label for="number">Phone Number:</label>
+            <input type="text" class="form-control form-control-sm" id="number" placeholder="Enter Your Phone Number" pattern="^(1)?[- ]?([0-9]{3})?[- ]?([0-9]{3})[- ]?([0-9]{4})$" required />
+            <div class="invalid-feedback">Phone is invalid</div>
+          </div>
+          <div class="mb-3">
+            <label for="details">Order:</label>
+            <textarea id="details" class="form-control form-control-sm" rows="5" required></textarea>
+          </div>
+          <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" id="callme">
+            <label class="custom-control-label" for="callme">Call me when it's ready</label>
+          </div>
+          <div class="g-recaptcha" data-sitekey="6Lcwo5wUAAAAAGeJf0caw6it_iPZvV9uYbPMu-ix"
+            data-callback="recapDone" data-error-callback="recapTimeout"></div>
+          <hr />
+          <div>
+            <button id="btnOrder" type="button" 
+              class="btn btn-lg btn-secondary rounded-circle mx-auto ml-md-5" style="display:block"
+              onclick="cgapp.sendOrder()" disabled="disabled">OK</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

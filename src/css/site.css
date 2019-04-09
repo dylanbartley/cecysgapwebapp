@@ -1,0 +1,108 @@
+/* ----- ROOT ----- */
+body .wrapper {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.content {
+  margin: 56px auto;
+}
+/* ----- */
+
+/* ----- SECTION CARDS ----- */
+.card {
+  margin-bottom: 25px;
+  overflow: hidden;
+}
+
+.menu-item a {
+  display: block;
+}
+
+.info-item .x-block {
+  display: block;
+}
+/* ----- */
+
+/* ----- FLOATING ACTION BUTTON ----- */
+.action-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.btn.btn-lg.action-button {
+  font-weight: bold;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+/* ----- */
+
+/* ----- MODAL VIEWS ----- */
+.app-modal {
+  display: none; /* only for initial load */
+  z-index: 1001;
+  position: fixed;
+  height: 100%;
+  right: 0;
+  left: 0;
+  top: 56px;
+  padding-bottom: 15%;
+  transform: translateY(100vh);
+  transition: transform 0.3s linear;
+}
+
+.app-modal.opened {
+  transform: translateY(0);
+}
+
+.app-modal .container, .app-modal .card {
+  height: 100%;
+}
+
+.app-modal .card-body {
+  max-height: 90%;
+  overflow: auto;
+}
+/* ----- */
+
+/* ---- FOOTER ----- */
+footer {
+  font-size: .73em;
+}
+
+.foot-link {
+  display: block;
+  padding: 0 1em 0.3em 1em;
+}
+/* ----- */
+
+/* ---- MEDIA QUERIES ----- */
+@media (min-width: 1200px) {
+  .action-container {
+    width: 69.4em;
+    right: inherit;
+    left: inherit;
+  }
+}
+
+@media (min-width: 768px) {
+  .info-item .x-block {
+    display: inline;
+  }
+}
+
+@media (min-width: 576px) {
+  .menu-item a {
+    float: right;
+  }
+}
+
+@media (min-height: 600px) {
+  .app-modal {
+    padding: 0;
+  }
+}
+/* ----- */
