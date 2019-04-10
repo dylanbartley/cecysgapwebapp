@@ -110,18 +110,21 @@ var CGApp = (function () {
                   .replace('$placed', this.getTimeString(dataItem.timestamp))
                   .replace('$expire', this.getTimeString(dataItem.timestamp, 'expire')));
     
-    // set status
-    switch (dataItem.status) {
+    // spoof status if order ready and passed hold time
+    var status =  dataItem.status === 2 && moment(dataItem.timestamp).add(2, 'hours').isBefore(moment()) ? -1 : dataItem.status;
+    
+    // set status text
+    switch (status) {
       case 1:
-        item.find('.order-status').addClass('border border-primary').text('order was placed');
+        item.find('.order-status').addClass('border border-info').text('order was placed');
         break;
       case 2:
         item.find('.order-status').addClass('bg-primary text-white').text('ready and held for you');
         break;
-      case 3:
+      case -1:
         item.find('.order-status').addClass('bg-warning text-white').text('ready but can be sold');
         break;
-      case 4:
+      case 3:
         item.find('.order-status').addClass('bg-dark text-white').text('order was sold');
         break;
       default:
