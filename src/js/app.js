@@ -32,9 +32,9 @@ const ORDER_ITEM_TEMPLATE = `<div id="$id" class="order-item bg-white p-2 mb-3 r
 </div>`;
 
 const ORDER_SUBMIT_ENDPOINT = 'https://us-central1-cecysgapwebapp.cloudfunctions.net/orderSubmit';
+const ORDER_SEARCH_ENDPOINT = 'https://us-central1-cecysgapwebapp.cloudfunctions.net/orderSearch';
 const MENUITEMS_ENDPOINT = 'https://cecysgapwebapp.firebaseio.com/menuitems.json';
 const INFOITEMS_ENDPOINT = 'https://cecysgapwebapp.firebaseio.com/infoitems.json';
-const ORDERITEMS_ENDPOINT = 'https://cecysgapwebapp.firebaseio.com/orders.json';
 
 var CGApp = (function () {
   this.currentModal = null;
@@ -248,7 +248,7 @@ var CGApp = (function () {
       //
       fetch(ORDER_SUBMIT_ENDPOINT, {
         method: 'POST',
-        header: {
+        headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
@@ -288,9 +288,23 @@ var CGApp = (function () {
     .catch(function ( err ) { console.error(err); });
     
   // retrieve order items
-  fetch(ORDERITEMS_ENDPOINT)
-    .then(function ( res ) { return res.json(); })
-    .then(function ( data ) { _cg.loadOrders(makeItemArray(data)); })
+  db.readData('orders')
+    .then(function ( items ) {
+      if (!items) { return; } // no storage API is available
+      
+      var ids = items.map(function ( i ) { return i.uid; });
+      
+      return fetch(ORDER_SEARCH_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(ids)
+      })
+      .then(function ( res ) { return res.json(); })
+      .then(function ( data ) { _cg.loadOrders(makeItemArray(data)); });
+    })
     .catch(function ( err ) { console.error(err); });
     
   // function to build array from data object
