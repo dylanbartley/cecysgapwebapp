@@ -20,7 +20,11 @@ body .wrapper {
   display: block;
 }
 
-.info-item .x-block {
+.order-details pre {
+  font-family: inherit;
+}
+
+.x-block {
   display: block;
 }
 /* ----- */
@@ -89,8 +93,11 @@ footer {
 }
 
 @media (min-width: 768px) {
-  .info-item .x-block {
+  .x-block {
     display: inline;
+  }
+  .order-status {
+    padding: 0 1em;
   }
 }
 

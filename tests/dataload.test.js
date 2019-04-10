@@ -134,3 +134,54 @@ describe('info item loading tests', () => {
     expect(count).toBe(4);
   });
 });
+
+describe('order items loading tests', () => {
+  beforeAll(() => {
+    document.body.innerHTML = `<div id="orderItems"></div>`;
+    
+    cgapp.loadOrders([
+      {
+        uid: 'none', status: 1, timestamp: 1554898668853, name: 'john smith', number: '615 1890', details: 'some chicken'
+      },
+      {
+        uid: 'asdfa', status: 2, timestamp: 1554898668853, name: 'joe bloe', number: '767 111 2222', details: 'sandwich \n coke'
+      },
+      {
+        uid: 'ht232', status: 3, timestamp: 1554898668853, name: 'joe bloe', number: '767 111 2222', details: 'sandwich \n coke'
+      }
+    ]);
+  });
+  
+  test('should have three order-item divs', () => {
+    var count = $('.order-item').length;
+    expect(count).toBe(3);
+  });
+  
+  test('1st item should have span stating order is "order was placed"', () => {
+    var span = $('.order-item:first-child .order-status');
+    var text = span.text();
+    expect(text).toBe('order was placed');
+  });
+  
+  test('2nd item should have span stating order is "ready and held for you"', () => {
+    var span = $('.order-item:nth-child(2) .order-status');
+    var text = span.text();
+    expect(text).toBe('ready and held for you');
+  });
+  
+  test('3rd item should have span stating order is "ready but can be sold"', () => {
+    var span = $('.order-item:nth-child(3) .order-status');
+    var text = span.text();
+    expect(text).toBe('ready but can be sold');
+  });
+  
+  test('should show time "12:17 pm" with utc-0', () => {
+    var text = cgapp.getTimeString(1554898668853, 'placed');
+    expect(text).toBe('12:17 pm');
+  });
+  
+  test('should show time "02:17 pm" with utc-0', () => {
+    var text = cgapp.getTimeString(1554898668853, 'expire');
+    expect(text).toBe('02:17 pm');
+  });
+});

@@ -7,6 +7,8 @@ var $ = window.jQuery = require('jquery/dist/jquery.slim.min.js');
 // tweaked boostrap to use globally defined 'jQuery' as opposed to require('jquery')
 require('./lib/bootstrap/bootstrap.js');
 
+const moment = require('moment');
+
 // database handler
 const db = require('./data');
 
@@ -14,10 +16,25 @@ const MENU_FOOD_CONT = '#tabMenuFood';
 const MENU_DRINK_CONT = '#tabMenuDrinks';
 const MENU_ITEM_TEMPLATE = '<li class="list-group-item menu-item"><p>$name</p><small>$desc</small></li>';
 const INFO_ITEM_TEMPLATE = '<div id="$id" class="info-item bg-white p-2 mb-3 rounded"><h5>$name</h5></div>';
+const ORDER_ITEM_TEMPLATE = `<div id="$id" class="order-item bg-white p-2 mb-3 rounded">
+    <div class="order-div-border mb-1 pb-1 clearfix">
+        <span class="x-block order-status rounded-lg text-center"></span>
+        <div class="float-md-right">
+          <span class="x-block small text-right ml-md-2">Placed At: $placed</span>
+          <span class="x-block small text-right ml-md-2">Held Until: $expire</span>
+        </div>
+    </div>
+    <div class="order-div-border mb-1 p-1">
+        <span class="x-block">$name</span>
+        <span class="x-block">$number</span>
+    </div>
+    <div class="order-details"><pre>$details</pre></div>
+</div>`;
 
 const ORDER_SUBMIT_ENDPOINT = 'https://us-central1-cecysgapwebapp.cloudfunctions.net/orderSubmit';
 const MENUITEMS_ENDPOINT = 'https://cecysgapwebapp.firebaseio.com/menuitems.json';
 const INFOITEMS_ENDPOINT = 'https://cecysgapwebapp.firebaseio.com/infoitems.json';
+const ORDERITEMS_ENDPOINT = 'https://cecysgapwebapp.firebaseio.com/orders.json';
 
 var CGApp = (function () {
   this.currentModal = null;
@@ -36,6 +53,17 @@ var CGApp = (function () {
     }
     
     return res;
+  };
+  
+  // parse and format timestamp
+  this.getTimeString = function ( timestamp, type ) {
+    let m = moment(timestamp);
+    
+    if (type === 'expire') {
+      m.add(2, 'hours');
+    }
+    
+    return m.format('hh:mm a');
   };
   
   // build menu list item html from db item
@@ -67,6 +95,37 @@ var CGApp = (function () {
       }
       
       item.append(part);
+    }
+    
+    return item;
+  };
+  
+  // build order item html from db item
+  this.createOrderItem = function ( dataItem ) {
+    var item = $(ORDER_ITEM_TEMPLATE
+                  .replace('$id', dataItem.uid)
+                  .replace('$name', dataItem.name)
+                  .replace('$number', dataItem.number)
+                  .replace('$details', dataItem.details)
+                  .replace('$placed', this.getTimeString(dataItem.timestamp))
+                  .replace('$expire', this.getTimeString(dataItem.timestamp, 'expire')));
+    
+    // set status
+    switch (dataItem.status) {
+      case 1:
+        item.find('.order-status').addClass('border border-primary').text('order was placed');
+        break;
+      case 2:
+        item.find('.order-status').addClass('bg-primary text-white').text('ready and held for you');
+        break;
+      case 3:
+        item.find('.order-status').addClass('bg-warning text-white').text('ready but can be sold');
+        break;
+      case 4:
+        item.find('.order-status').addClass('bg-dark text-white').text('order was sold');
+        break;
+      default:
+        // code
     }
     
     return item;
@@ -121,6 +180,20 @@ var CGApp = (function () {
         
         // add item to container
         $('#infoItems').append(item);
+      }
+    }
+  };
+  
+  // load order items from database on to page
+  this.loadOrders = function ( data ) {
+    if (Array.isArray(data) && data.length) {
+      $('.order-item').remove(); // remove previous
+      
+      for (var i = 0; i < data.length; i++) {
+        var item = this.createOrderItem(data[i]);
+        
+        // add item to container
+        $('#orderItems').append(item);
       }
     }
   };
@@ -211,9 +284,17 @@ var CGApp = (function () {
     .then(function ( data ) { _cg.loadInfo(makeItemArray(data)); })
     .catch(function ( err ) { console.error(err); });
     
+  // retrieve order items
+  fetch(ORDERITEMS_ENDPOINT)
+    .then(function ( res ) { return res.json(); })
+    .then(function ( data ) { _cg.loadOrders(makeItemArray(data)); })
+    .catch(function ( err ) { console.error(err); });
+    
   // function to build array from data object
   function makeItemArray ( data ) {
     var arr = [];
+    
+    if (!data) { return arr; }
     
     // sort items by object key: e.g. item001, item025 ...
     var keys = Object.keys(data);

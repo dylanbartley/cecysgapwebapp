@@ -34,3 +34,8 @@ $card-border-width: 0;
 @import "node_modules/bootstrap/scss/close";
 @import "node_modules/bootstrap/scss/spinners";
 @import "node_modules/bootstrap/scss/utilities";
+
+.order-div-border {
+  border-bottom: 1px solid;
+  border-color: $gray-500;  
+}
