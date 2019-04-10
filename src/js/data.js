@@ -10,7 +10,7 @@ if ('indexedDB' in window) {
     upgrade ( db ) {
       for (var i = 0; i < stores.length; i++) {
         if (!db.objectStoreNames.contains(stores[i])) {
-          db.createObjectStore(stores[i], { keyPath: 'id' });
+          db.createObjectStore(stores[i], { keyPath: 'uid' });
         }
       }
     }

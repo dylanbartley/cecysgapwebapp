@@ -165,8 +165,8 @@ var CGApp = (function () {
   
   // send order to backend
   this.sendOrder = function () {
-    var res = this.getOrder();
-    if (res) {
+    var order = this.getOrder();
+    if (order) {
       var btn = $('#btnOrder');
       btn.html('<div class="spinner-border text-light"></div>');
       //
@@ -176,7 +176,7 @@ var CGApp = (function () {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify(res)
+        body: JSON.stringify(order)
       })
       .then(function ( res ) {
         console.log(res);
@@ -184,7 +184,9 @@ var CGApp = (function () {
           this.orderComplete();
         }
         btn.html('OK');
+        return res.json();
       })
+      .then(data => db.writeData('orders', data))
       .catch(function ( err ) {
         console.error(err);
         btn.html('OK');
