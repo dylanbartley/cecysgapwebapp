@@ -4,11 +4,8 @@ require('./css/theme.css');
 
 const $ = require('jquery/dist/jquery.slim.min.js');
 
-// indexedDb handler
-const db = require('./js/data');
-
 // main application object
-const cgapp = window.cgapp = require('./js/app');
+window.cgapp = require('./js/app');
 
 // show modal which are hidden by default, they are translated out of view
 // otherwise they will animate down on load

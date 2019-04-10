@@ -1,10 +1,14 @@
+/* global fetch grecaptcha */
+
 require('promise-polyfill');
 require('whatwg-fetch'); // fetch api polyfill
 
-/* global fetch grecaptcha */
 var $ = window.jQuery = require('jquery/dist/jquery.slim.min.js');
 // tweaked boostrap to use globally defined 'jQuery' as opposed to require('jquery')
 require('./lib/bootstrap/bootstrap.js');
+
+// database handler
+const db = require('./data');
 
 const MENU_FOOD_CONT = '#tabMenuFood';
 const MENU_DRINK_CONT = '#tabMenuDrinks';
