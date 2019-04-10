@@ -265,6 +265,8 @@ var CGApp = (function () {
       .then(data => db.writeData('orders', data))
       .catch(function ( err ) {
         console.error(err);
+        // reset captcha
+        grecaptcha.reset();
         btn.html('OK');
       });
     }
