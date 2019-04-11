@@ -1,4 +1,4 @@
-/* global fetch grecaptcha */
+/* global fetch */
 
 require('promise-polyfill');
 require('whatwg-fetch'); // fetch api polyfill
@@ -166,7 +166,6 @@ var CGApp = (function () {
     
     // clear capture but keep form alive with values
     this.currentForm.check(false);
-    grecaptcha.reset();
   };
   
   // load menu items from database on to page
@@ -212,20 +211,11 @@ var CGApp = (function () {
     }
   };
   
-  this.formComplete = function () {
-    this.closeModal();
-    //
-    this.currentForm.clear();
-    // reset captcha
-    grecaptcha.reset();
-  };
-  
   // send order to backend
   this.sendOrder = function () {
     var order = this.currentForm.get();
     if (order) {
-      order.token = this.recapToken;
-      
+
       var btn = $('#btnOrder');
       btn.html('<div class="spinner-border text-light"></div>');
       //
@@ -241,7 +231,8 @@ var CGApp = (function () {
       .then(function ( res ) {
         console.log(res);
         if (res.ok) {
-          _cg.formComplete();
+          _cg.closeModal();
+          _cg.currentForm.clear();
         }
         btn.html('OK');
         return res.json();
@@ -249,8 +240,7 @@ var CGApp = (function () {
       .then(data => db.writeData('orders', data))
       .catch(function ( err ) {
         console.error(err);
-        // reset captcha
-        grecaptcha.reset();
+        _cg.currentForm.check(false);
         btn.html('OK');
       });
     }
@@ -260,8 +250,7 @@ var CGApp = (function () {
   this.sendFeedback = function () {
     var feedback = this.currentForm.get();
     if (feedback) {
-      feedback.token = this.recapToken;
-      console.log(feedback);
+
       var btn = $('#btnFeedback');
       btn.html('<div class="spinner-border text-light"></div>');
       //
@@ -271,12 +260,13 @@ var CGApp = (function () {
           if (res.ok) {
             
           }
-          _cg.formComplete();
+          _cg.closeModal();
+          _cg.currentForm.clear();
           btn.html('OK');
         })
         .catch(function ( err ) {
           console.error(err);
-          grecaptcha.reset();
+          _cg.currentForm.check(false);
           btn.html('OK');
         });
     }

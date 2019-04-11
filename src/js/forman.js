@@ -1,3 +1,5 @@
+/* global grecaptcha */
+
 const $ = require('jquery/dist/jquery.slim.min.js');
 
 const FORM_KEYS = {
@@ -24,6 +26,7 @@ const FORM_KEYS = {
 var ForMan = (function () {
   function ForMan () {
     this.form = null;
+    this.recapId = null;
     this.isInputReady = false;
     this.isRecapReady = false;
     this.token = null;
@@ -33,9 +36,10 @@ var ForMan = (function () {
     if (!id) { throw('Attempting to open invalid form'); }
     
     this.form = $('#' + id + 'Form');
+    this.recapId = id + 'Cap';
     if (!this.form.length) {
       this.form = null;
-      throw('Failed to find html "#' + id +'Form"');  
+      this.recapId = null;
     }
     
     return this;
@@ -47,6 +51,7 @@ var ForMan = (function () {
       this.token = recapToken;
     } else if (recapToken === false) {
       this.isRecapReady = false;
+      grecaptcha.reset(this.recapId);
     }
 
     if (!this.form) { return; }
@@ -91,6 +96,8 @@ var ForMan = (function () {
     this.token = null;
     
     if (!this.form) { return; }
+    
+    grecaptcha.reset(this.recapId);
     
     this.form[0].reset();
     this.form.find('button').attr('disabled', 'disabled');

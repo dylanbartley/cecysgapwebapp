@@ -24,6 +24,10 @@ body .wrapper {
   font-family: inherit;
 }
 
+.privacy {
+  font-size: .83em;  
+}
+
 .x-block {
   display: block;
 }

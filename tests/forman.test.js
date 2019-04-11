@@ -1,3 +1,5 @@
+window.grecaptcha = { reset: function () {} };
+
 const forman = require('../src/js/forman');
 
 /* global expect beforeAll */
@@ -47,9 +49,9 @@ describe('place order forman tests', () => {
     expect(mForm).toBeTruthy();
   });
   
-  test('should have 5 keys (name, number, details and callme)', () => {
+  test('should have 6 keys (name, number, details and callme, category)', () => {
     var res = mForm.get();
-    expect(Object.keys(res).length).toBe(5);
+    expect(Object.keys(res).length).toBe(6);
   });
   
   test('callme should be true', () => {
