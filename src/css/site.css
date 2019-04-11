@@ -27,6 +27,18 @@ body .wrapper {
 .x-block {
   display: block;
 }
+
+.i-star {
+  position: relative;
+}
+
+.i-star input[type=radio] {
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
 /* ----- */
 
 /* ----- FLOATING ACTION BUTTON ----- */

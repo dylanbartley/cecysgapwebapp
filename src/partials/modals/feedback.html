@@ -1,0 +1,64 @@
+<div id="feedbackModal" class="app-modal">
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        Tell Me Your Thoughts and Concerns
+        <a href="#" class="close mod-close text-info" onclick="cgapp.closeModal()">&times;</a>
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="mb-3">
+            <div class="custom-control custom-radio custom-control-inline x-block">
+              <input type="radio" class="custom-control-input" id="feedbackType1" name="category" value="menu" required>
+              <label class="custom-control-label" for="feedbackType1">Menu Items</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline x-block">
+              <input type="radio" class="custom-control-input" id="feedbackType2" name="category" value="service" required>
+              <label class="custom-control-label" for="feedbackType2">Service</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline x-block">
+              <input type="radio" class="custom-control-input" id="feedbackType3" name="category" value="app" required>
+              <label class="custom-control-label" for="feedbackType3">App/Website</label>
+            </div>
+          </div>
+          
+          <div class="mb-3 d-flex justify-content-around" style="max-width:200px">
+            <label class="i-star selected">
+              <span></span>
+              <input type="radio" name="rating" value="1" required checked>
+            </label>
+            <label class="i-star">
+              <span></span>
+              <input type="radio" name="rating" value="2" required>
+            </label>
+            <label class="i-star">
+              <span></span>
+              <input type="radio" name="rating" value="3" required>
+            </label>
+            <label class="i-star">
+              <span></span>
+              <input type="radio" name="rating" value="4" required>
+            </label>
+            <label class="i-star">
+              <span></span>
+              <input type="radio" name="rating" value="5" required>
+            </label>
+          </div>
+          <div class="mb-3">
+            <label for="feedback">Order:</label>
+            <textarea id="feedback" class="form-control form-control-sm" rows="5" required></textarea>
+          </div>
+
+          <div class="g-recaptcha" data-sitekey="6Lcwo5wUAAAAAGeJf0caw6it_iPZvV9uYbPMu-ix"
+            data-callback="recapDone" data-error-callback="recapTimeout"></div>
+          <hr />
+          <div>
+            <button id="btnFeedback" type="button" 
+              class="btn btn-lg btn-secondary rounded-circle mx-auto ml-md-5" style="display:block"
+              onclick="" disabled="disabled">OK</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

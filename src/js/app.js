@@ -7,6 +7,7 @@ var $ = window.jQuery = require('jquery/dist/jquery.slim.min.js');
 // tweaked boostrap to use globally defined 'jQuery' as opposed to require('jquery')
 require('./lib/bootstrap/bootstrap.js');
 
+const { star } = require('octicons');
 const moment = require('moment');
 
 // database handler
@@ -41,6 +42,7 @@ var CGApp = (function () {
   this.recapToken = null;
   this.isRecapReady = false;
   this.isInputReady = false;
+  this.feedbackScore = 1;
   
   // strips white spaces and lowercases input string
   this.cleanString = function ( input ) {
@@ -335,6 +337,25 @@ var CGApp = (function () {
     .blur(function () {
       _cg.isInputReady = $('form')[0].checkValidity();
       _cg.formReady();
+    });
+    
+  // add star svg icon and attach events
+  $('.i-star span')
+    .html(star.toSVG({ height: 20 }));
+  $('.i-star input')
+    .click(function () {
+      var cval = parseInt($(this).val());
+      //
+      $('.i-star').each(function ( idx, val ) {
+        var radio = $(val).find('input');
+        //
+        $(val).removeClass('selected');
+        //
+        var rate = parseInt(radio.val());
+        if (rate <= cval) {
+          $(val).addClass('selected');
+        }
+      });
     });
     
   /**
