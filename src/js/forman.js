@@ -36,7 +36,7 @@ var ForMan = (function () {
   };
   
   ForMan.prototype.check = function ( recapReady ) {
-    if (recapReady !== null) { this.isRecapReady = recapReady; }
+    if (recapReady !== null && recapReady !== void (0)) { this.isRecapReady = recapReady; }
 
     if (!this.formId) { return; }
     

@@ -36,6 +36,7 @@ const ORDER_ITEM_TEMPLATE = `<div id="$id" class="order-item bg-white p-2 mb-3 r
 
 const ORDER_SUBMIT_ENDPOINT = 'https://us-central1-cecysgapwebapp.cloudfunctions.net/orderSubmit';
 const ORDER_SEARCH_ENDPOINT = 'https://us-central1-cecysgapwebapp.cloudfunctions.net/orderSearch';
+const FEEDBACK_ENDPOINT = 'https://us-central1-cecysgapwebapp.cloudfunctions.net/feedback';
 const MENUITEMS_ENDPOINT = 'https://cecysgapwebapp.firebaseio.com/menuitems.json';
 const INFOITEMS_ENDPOINT = 'https://cecysgapwebapp.firebaseio.com/infoitems.json';
 
@@ -228,6 +229,7 @@ var CGApp = (function () {
       var btn = $('#btnOrder');
       btn.html('<div class="spinner-border text-light"></div>');
       //
+      var _cg = this;
       fetch(ORDER_SUBMIT_ENDPOINT, {
         method: 'POST',
         headers: {
@@ -239,7 +241,7 @@ var CGApp = (function () {
       .then(function ( res ) {
         console.log(res);
         if (res.ok) {
-          this.formComplete();
+          _cg.formComplete();
         }
         btn.html('OK');
         return res.json();
@@ -251,6 +253,32 @@ var CGApp = (function () {
         grecaptcha.reset();
         btn.html('OK');
       });
+    }
+  };
+  
+  // send feedback to backend
+  this.sendFeedback = function () {
+    var feedback = this.currentForm.get();
+    if (feedback) {
+      feedback.token = this.recapToken;
+      console.log(feedback);
+      var btn = $('#btnFeedback');
+      btn.html('<div class="spinner-border text-light"></div>');
+      //
+      var _cg = this;
+      fetch(FEEDBACK_ENDPOINT + '?' + $.param(feedback))
+        .then(function ( res ) {
+          if (res.ok) {
+            
+          }
+          _cg.formComplete();
+          btn.html('OK');
+        })
+        .catch(function ( err ) {
+          console.error(err);
+          grecaptcha.reset();
+          btn.html('OK');
+        });
     }
   };
   
