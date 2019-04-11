@@ -310,10 +310,11 @@ var CGApp = (function () {
   }
   
   // set event listeners for form inputs
-  $('.form-control, .custom-control-input, .i-star input')
+  $('.form-control')
     .focus(function () {
       $(this).parent().addClass('was-validated');
-    })
+    });
+  $('.form-control, .custom-control-input, .i-star input')
     .on('keyup change', function () { _cg.currentForm.check(); });
     
   // add star svg icon and attach events
