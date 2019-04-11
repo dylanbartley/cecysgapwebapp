@@ -1,18 +1,18 @@
 const $ = require('jquery/dist/jquery.slim.min.js');
 
 const FORM_KEYS = {
-  '#placeorderForm': {
+  placeorderForm: {
     name: 1,
     number: 1,
     details: 1,
     callme: 2
   },
-  '#feedbackForm': {
+  feedbackForm: {
     category: 3,
     rating: 3,
     feedback: 1
   },
-  '#testForm': {
+  testForm: {
     name: 1,
     number: 1,
     details: 1,
@@ -23,7 +23,7 @@ const FORM_KEYS = {
 
 var ForMan = (function () {
   function ForMan () {
-    this.formId = null;
+    this.form = null;
     this.isInputReady = false;
     this.isRecapReady = false;
     this.token = null;
@@ -32,7 +32,12 @@ var ForMan = (function () {
   ForMan.prototype.open = function ( id ) {
     if (!id) { throw('Attempting to open invalid form'); }
     
-    this.formId = '#' + id + 'Form';
+    this.form = $('#' + id + 'Form');
+    if (!this.form.length) {
+      this.form = null;
+      throw('Failed to find html "#' + id +'Form"');  
+    }
+    
     return this;
   };
   
@@ -44,24 +49,22 @@ var ForMan = (function () {
       this.isRecapReady = false;
     }
 
-    if (!this.formId) { return; }
+    if (!this.form) { return; }
     
-    var form = $(this.formId);
-    if (!form.length) { return; }
-    
-    this.isInputReady = form[0].checkValidity();
+    this.isInputReady = this.form[0].checkValidity();
     
     if (this.isInputReady && this.isRecapReady) {
-      $(this.formId + ' button').attr('disabled', null);
+      this.form.find('button').attr('disabled', null);
     } else {
-      $(this.formId + ' button').attr('disabled', 'disabled');
+      this.form.find('button').attr('disabled', 'disabled');
     }
   };
   
   ForMan.prototype.get = function () {
-    if (!this.formId) { return null; }
+    if (!this.form) { return null; }
     
-    var keySet = FORM_KEYS[this.formId];
+    var id = this.form.attr('id');
+    var keySet = FORM_KEYS[id];
     var result = {};
     
     for (var key in keySet) {
@@ -87,11 +90,12 @@ var ForMan = (function () {
   ForMan.prototype.clear = function () {
     this.token = null;
     
-    if (!this.formId) { return; }
+    if (!this.form) { return; }
     
-    $(this.formId)[0].reset();
-    $(this.formId + ' button').attr('disabled', 'disabled');
-    $(this.formId + ' .was-validated').removeClass('was-validated');
+    this.form[0].reset();
+    this.form.find('button').attr('disabled', 'disabled');
+    this.form.find('.was-validated').removeClass('was-validated');
+    this.form.find('.i-star:not(:first-child)').removeClass('selected');
   };
   
   return ForMan;
