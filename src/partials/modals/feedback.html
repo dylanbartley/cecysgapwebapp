@@ -7,6 +7,7 @@
       </div>
       <div class="card-body">
         <form id="feedbackForm">
+          <div>What's this about?</div>
           <div class="mb-3">
             <div class="custom-control custom-radio custom-control-inline x-block">
               <input type="radio" class="custom-control-input" id="feedbackType1" name="category" value="menu" required>
@@ -22,6 +23,7 @@
             </div>
           </div>
           
+          <div>How'd you rate us?</div>
           <div class="mb-3 d-flex justify-content-around" style="max-width:200px">
             <label class="i-star selected">
               <span></span>
@@ -45,12 +47,11 @@
             </label>
           </div>
           <div class="mb-3">
-            <label for="feedback">Order:</label>
-            <textarea id="feedback" class="form-control form-control-sm" rows="5" required></textarea>
+            <textarea id="feedback" class="form-control form-control-sm" rows="5" required placeholder="Enter Feedback Here ..."></textarea>
           </div>
 
           <div class="g-recaptcha" data-sitekey="6Lcwo5wUAAAAAGeJf0caw6it_iPZvV9uYbPMu-ix"
-            data-callback="recapDone" data-error-callback="recapTimeout"></div>
+            data-callback="recapDone" data-size="compact" data-error-callback="recapTimeout"></div>
           <hr />
           <div>
             <button id="btnFeedback" type="button" 
