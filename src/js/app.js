@@ -12,6 +12,8 @@ const moment = require('moment');
 
 // database handler
 const db = require('./data');
+// form handler
+const forman = require('./forman');
 
 const MENU_FOOD_CONT = '#tabMenuFood';
 const MENU_DRINK_CONT = '#tabMenuDrinks';
@@ -42,9 +44,6 @@ var CGApp = (function () {
   this.currentForm = null;
   
   this.recapToken = null;
-  this.isRecapReady = false;
-  this.isInputReady = false;
-  this.feedbackScore = 1;
   
   // strips white spaces and lowercases input string
   this.cleanString = function ( input ) {
@@ -151,16 +150,7 @@ var CGApp = (function () {
       $('#collapsibleNavbar').collapse("hide");
 
       // set the form we are working with
-      switch (modalName) {
-        case 'placeorder':
-          this.currentForm = '#orderForm';
-          break;
-        case 'feedback':
-          this.currentForm = '#feedbackForm';
-          break;
-        default:
-          this.currentForm = null;
-      }
+      this.currentForm = forman(modalName);
     } else {
       this.currentModal = null;
     }
@@ -173,7 +163,8 @@ var CGApp = (function () {
       this.currentModal = null;
     }
     
-    this.isRecapReady = false;
+    // clear capture but keep form alive with values
+    this.currentForm.check(false);
     grecaptcha.reset();
   };
   
@@ -220,48 +211,20 @@ var CGApp = (function () {
     }
   };
   
-  // enable order form button
-  this.formReady = function () {
-    if (this.isInputReady && this.isRecapReady) {
-      $(this.currentForm + ' button').attr('disabled', null);
-    } else {
-      $(this.currentForm + ' button').attr('disabled', 'disabled');
-    }
-  };
-  
-  // get order details from html
-  this.getOrder = function () {
-    var name = $('#name').val();
-    var number = $('#number').val();
-    var details = $('#details').val();
-    
-    return {
-      name: name,
-      number: number,
-      details: details,
-      token: this.recapToken
-    };
-  };
-  
-  this.orderComplete = function () {
+  this.formComplete = function () {
     this.closeModal();
-    // reset cgapp form logic
-    this.isInputReady = false;
-    this.isRecapReady = false;
-    this.formReady();
-    // reset form html
-    $('form')[0].reset();
-    $('.form-control')
-      .parent()
-      .removeClass('was-validated');
+    //
+    this.currentForm.clear();
     // reset captcha
     grecaptcha.reset();
   };
   
   // send order to backend
   this.sendOrder = function () {
-    var order = this.getOrder();
+    var order = this.currentForm.get();
     if (order) {
+      order.token = this.recapToken;
+      
       var btn = $('#btnOrder');
       btn.html('<div class="spinner-border text-light"></div>');
       //
@@ -276,7 +239,7 @@ var CGApp = (function () {
       .then(function ( res ) {
         console.log(res);
         if (res.ok) {
-          this.orderComplete();
+          this.formComplete();
         }
         btn.html('OK');
         return res.json();
@@ -351,10 +314,7 @@ var CGApp = (function () {
     .focus(function () {
       $(this).parent().addClass('was-validated');
     })
-    .on('keyup change', function () {
-      _cg.isInputReady = $(_cg.currentForm)[0].checkValidity();
-      _cg.formReady();
-    });
+    .on('keyup change', function () { _cg.currentForm.check(); });
     
   // add star svg icon and attach events
   $('.i-star span')
@@ -380,14 +340,10 @@ var CGApp = (function () {
    */
   window.recapDone = function ( token ) {
     _cg.recapToken = token;
-    _cg.isRecapReady = true;
-    //
-    _cg.formReady();
+    _cg.currentForm.check(true);
   };
   window.recapTimeout = function () {
-    _cg.isRecapReady = true;
-    //
-    _cg.formReady();
+    _cg.currentForm.check(true);
   };
   
   return this;

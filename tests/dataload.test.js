@@ -144,10 +144,10 @@ describe('order items loading tests', () => {
         uid: 'none', status: 1, timestamp: 1554898668853, name: 'john smith', number: '615 1890', details: 'some chicken'
       },
       {
-        uid: 'asdfa', status: 2, timestamp: 1554898668853, name: 'joe bloe', number: '767 111 2222', details: 'sandwich \n coke'
+        uid: 'asdfa', status: 2, timestamp: Date.now(), name: 'joe bloe', number: '767 111 2222', details: 'sandwich \n coke'
       },
       {
-        uid: 'ht232', status: 3, timestamp: 1554898668853, name: 'joe bloe', number: '767 111 2222', details: 'sandwich \n coke'
+        uid: 'ht232', status: -1, timestamp: 1554898668853, name: 'joe bloe', number: '767 111 2222', details: 'sandwich \n coke'
       }
     ]);
   });

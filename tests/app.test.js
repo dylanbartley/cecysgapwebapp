@@ -1,3 +1,5 @@
+window.grecaptcha = { reset: function () {} };
+
 const $ = require('jquery');
 const cgapp = require('../src/js/app');
 
