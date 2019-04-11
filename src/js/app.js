@@ -39,6 +39,8 @@ const INFOITEMS_ENDPOINT = 'https://cecysgapwebapp.firebaseio.com/infoitems.json
 
 var CGApp = (function () {
   this.currentModal = null;
+  this.currentForm = null;
+  
   this.recapToken = null;
   this.isRecapReady = false;
   this.isInputReady = false;
@@ -147,6 +149,18 @@ var CGApp = (function () {
       
       // close nav menu if it's opened
       $('#collapsibleNavbar').collapse("hide");
+
+      // set the form we are working with
+      switch (modalName) {
+        case 'placeorder':
+          this.currentForm = '#orderForm';
+          break;
+        case 'feedback':
+          this.currentForm = '#feedbackForm';
+          break;
+        default:
+          this.currentForm = null;
+      }
     } else {
       this.currentModal = null;
     }
@@ -158,6 +172,9 @@ var CGApp = (function () {
       this.currentModal.removeClass('opened');
       this.currentModal = null;
     }
+    
+    this.isRecapReady = false;
+    grecaptcha.reset();
   };
   
   // load menu items from database on to page
@@ -206,9 +223,9 @@ var CGApp = (function () {
   // enable order form button
   this.formReady = function () {
     if (this.isInputReady && this.isRecapReady) {
-      $('#btnOrder').attr('disabled', null);
+      $(this.currentForm + ' button').attr('disabled', null);
     } else {
-      $('#btnOrder').attr('disabled', 'disabled');
+      $(this.currentForm + ' button').attr('disabled', 'disabled');
     }
   };
   
@@ -330,12 +347,12 @@ var CGApp = (function () {
   }
   
   // set event listeners for form inputs
-  $('.form-control')
+  $('.form-control, .custom-control-input, .i-star input')
     .focus(function () {
       $(this).parent().addClass('was-validated');
     })
-    .blur(function () {
-      _cg.isInputReady = $('form')[0].checkValidity();
+    .on('keyup change', function () {
+      _cg.isInputReady = $(_cg.currentForm)[0].checkValidity();
       _cg.formReady();
     });
     
