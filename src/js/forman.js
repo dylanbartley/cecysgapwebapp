@@ -26,6 +26,7 @@ var ForMan = (function () {
     this.formId = null;
     this.isInputReady = false;
     this.isRecapReady = false;
+    this.token = null;
   }
   
   ForMan.prototype.open = function ( id ) {
@@ -35,8 +36,13 @@ var ForMan = (function () {
     return this;
   };
   
-  ForMan.prototype.check = function ( recapReady ) {
-    if (recapReady !== null && recapReady !== void (0)) { this.isRecapReady = recapReady; }
+  ForMan.prototype.check = function ( recapToken ) {
+    if (recapToken) {
+      this.isRecapReady = true;
+      this.token = recapToken;
+    } else if (recapToken === false) {
+      this.isRecapReady = false;
+    }
 
     if (!this.formId) { return; }
     
@@ -72,10 +78,15 @@ var ForMan = (function () {
     }
     
     // return null if no results
-    return Object.keys(result).length > 0 ? result : null;
+    if (Object.keys(result).length < 1) { return null; }
+    
+    result.token = this.token;
+    return result;
   };
   
   ForMan.prototype.clear = function () {
+    this.token = null;
+    
     if (!this.formId) { return; }
     
     $(this.formId)[0].reset();
