@@ -4,6 +4,7 @@ require('./css/theme.css');
 
 const $ = require('jquery/dist/jquery.slim.min.js');
 
+// replacement token sent when google recaptcha times out. doesn't do anything yet
 const NAMESPACE = '794f6dd9-43a7-3f04-916a-7e957fefc565';
 
 $(function () {

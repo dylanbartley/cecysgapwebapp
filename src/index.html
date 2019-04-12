@@ -6,9 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>CecysGap</title>
   <script>
-    var onloadCb = function () {
+    // google recaptcha script load callback
+    window.onloadCb = function () {
       /* global grecaptcha */
-      console.log('ready');
       var options = {
         'sitekey': '6Lcwo5wUAAAAAGeJf0caw6it_iPZvV9uYbPMu-ix',
         'size': 'compact',
@@ -16,6 +16,7 @@
         'expired-callback': window.recapTimeout
       };
       
+      // store widget ids for ref
       window.placeorderCap = grecaptcha.render('plCap', options);
       window.feedbackCap = grecaptcha.render('fdCap', options);
     };
@@ -57,6 +58,7 @@
     ${require('./partials/modals/feedback.html')}
     ${require('./partials/modals/privacy.html')}
   </div>
+  
   <script src="https://www.google.com/recaptcha/api.js?onload=onloadCb&render=explicit" async defer></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 
 const $ = require('jquery/dist/jquery.slim.min.js');
 
+// name/id of input fields and method to retrieve value. see ForMan.get
 const FORM_KEYS = {
   placeorderForm: {
     name: 1,
@@ -25,11 +26,11 @@ const FORM_KEYS = {
 
 var ForMan = (function () {
   function ForMan () {
-    this.form = null;
-    this.recapId = null;
+    this.form = null; // jQuery form object
+    this.recapId = null; // recaptcha widget id
     this.isInputReady = false;
     this.isRecapReady = false;
-    this.token = null;
+    this.token = null; // recaptcha token or NAMESPACE (see main.js) fallback
   }
   
   ForMan.prototype.open = function ( id ) {
@@ -37,6 +38,7 @@ var ForMan = (function () {
     
     this.form = $('#' + id + 'Form');
     this.recapId = window[id + 'Cap'];
+    
     if (!this.form.length) {
       this.form = null;
       this.recapId = null;
@@ -46,11 +48,14 @@ var ForMan = (function () {
   };
   
   ForMan.prototype.check = function ( recapToken ) {
+    // set recaptcha token
     if (recapToken) {
       this.isRecapReady = true;
       this.token = recapToken;
+    // unset recaptcha without reseting form inputs
     } else if (recapToken === false) {
       this.isRecapReady = false;
+      this.token = null;
       grecaptcha.reset(this.recapId);
     }
 
@@ -58,6 +63,7 @@ var ForMan = (function () {
     
     this.isInputReady = this.form[0].checkValidity();
     
+    // enable/disable submit button. should be only button in the respective form
     if (this.isInputReady && this.isRecapReady) {
       this.form.find('button').attr('disabled', null);
     } else {
@@ -74,13 +80,13 @@ var ForMan = (function () {
     
     for (var key in keySet) {
       switch (keySet[key]) {
-        case 1:
+        case 1: // input,textarea by id
           result[key] = $('#' + key).val();
           break;
-        case 2:
+        case 2: // checkbox by id
           result[key] = $('#' + key).prop('checked');
           break;
-        case 3:
+        case 3: // radio button groups by name
           result[key] = $('[name=' + key + ']:checked').val();
       }  
     }
@@ -94,6 +100,8 @@ var ForMan = (function () {
   
   ForMan.prototype.clear = function () {
     this.token = null;
+    this.isRecapReady = false;
+    this.isInputReady = false;
     
     if (!this.form) { return; }
     

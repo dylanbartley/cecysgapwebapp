@@ -1,10 +1,9 @@
 /* global fetch */
-
 require('promise-polyfill');
 require('whatwg-fetch'); // fetch api polyfill
 
 var $ = window.jQuery = require('jquery/dist/jquery.slim.min.js');
-// tweaked boostrap to use globally defined 'jQuery' as opposed to require('jquery')
+// tweaked bootstrap to use globally defined 'jQuery' as opposed to require('jquery')
 require('./lib/bootstrap/bootstrap.js');
 
 const { star } = require('octicons');
@@ -17,6 +16,7 @@ const forman = require('./forman');
 
 const MENU_FOOD_CONT = '#tabMenuFood';
 const MENU_DRINK_CONT = '#tabMenuDrinks';
+
 const MENU_ITEM_TEMPLATE = '<li class="list-group-item menu-item"><p>$name</p><small>$desc</small></li>';
 const INFO_ITEM_TEMPLATE = '<div id="$id" class="info-item bg-white p-2 mb-3 rounded"><h5>$name</h5></div>';
 const ORDER_ITEM_TEMPLATE = `<div id="$id" class="order-item bg-white p-2 mb-3 rounded">
@@ -227,7 +227,6 @@ var CGApp = (function () {
         body: JSON.stringify(order)
       })
       .then(function ( res ) {
-        console.log(res);
         if (res.ok) {
           _cg.closeModal();
           _cg.currentForm.clear();
@@ -288,6 +287,7 @@ var CGApp = (function () {
     .catch(function ( err ) { console.error(err); });
     
   // retrieve order items
+  // endpoint requires a list of ids to filter for
   db.readData('orders')
     .then(function ( items ) {
       if (!items) { return; } // no storage API is available
@@ -304,6 +304,7 @@ var CGApp = (function () {
       })
       .then(function ( res ) { return res.json(); })
       .then(function ( data ) {
+        // replace locally stored items with results
         db.clearData('orders')
           .then(function () {
             data.forEach(function ( d ) { db.writeData('orders', d); });
