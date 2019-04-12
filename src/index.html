@@ -5,7 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>CecysGap</title>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script>
+    var onloadCb = function () {
+      /* global grecaptcha */
+      console.log('ready');
+      var options = {
+        'sitekey': '6Lcwo5wUAAAAAGeJf0caw6it_iPZvV9uYbPMu-ix',
+        'size': 'compact',
+        'callback': window.recapDone,
+        'expired-callback': window.recapTimeout
+      };
+      
+      window.placeorderCap = grecaptcha.render('plCap', options);
+      window.feedbackCap = grecaptcha.render('fdCap', options);
+    };
+  </script>
 </head>
 <body>
   <div class="wrapper">
@@ -43,5 +57,6 @@
     ${require('./partials/modals/feedback.html')}
     ${require('./partials/modals/privacy.html')}
   </div>
+  <script src="https://www.google.com/recaptcha/api.js?onload=onloadCb&render=explicit" async defer></script>
 </body>
 </html>

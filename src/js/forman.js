@@ -36,7 +36,7 @@ var ForMan = (function () {
     if (!id) { throw('Attempting to open invalid form'); }
     
     this.form = $('#' + id + 'Form');
-    this.recapId = id + 'Cap';
+    this.recapId = window[id + 'Cap'];
     if (!this.form.length) {
       this.form = null;
       this.recapId = null;

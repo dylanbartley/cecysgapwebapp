@@ -40,8 +40,6 @@ const FEEDBACK_ENDPOINT = 'https://us-central1-cecysgapwebapp.cloudfunctions.net
 const MENUITEMS_ENDPOINT = 'https://cecysgapwebapp.firebaseio.com/menuitems.json';
 const INFOITEMS_ENDPOINT = 'https://cecysgapwebapp.firebaseio.com/infoitems.json';
 
-const NAMESPACE = '794f6dd9-43a7-3f04-916a-7e957fefc565';
-
 var CGApp = (function () {
   this.currentModal = null;
   this.currentForm = null;
@@ -359,17 +357,7 @@ var CGApp = (function () {
         }
       });
     });
-    
-  /**
-   * Google ReCaptcha Callbacks
-   */
-  window.recapDone = function ( token ) {
-    _cg.currentForm.check(token);
-  };
-  window.recapTimeout = function () {
-    _cg.currentForm.check(NAMESPACE);
-  };
-  
+
   return this;
 })();
 
