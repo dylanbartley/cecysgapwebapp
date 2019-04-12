@@ -305,7 +305,13 @@ var CGApp = (function () {
         body: JSON.stringify(ids)
       })
       .then(function ( res ) { return res.json(); })
-      .then(function ( data ) { _cg.loadOrders(makeItemArray(data)); });
+      .then(function ( data ) {
+        db.clearData('orders')
+          .then(function () {
+            data.forEach(function ( d ) { db.writeData('orders', d); });
+          });
+        _cg.loadOrders(data); 
+      });
     })
     .catch(function ( err ) { console.error(err); });
     
