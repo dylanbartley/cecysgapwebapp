@@ -1,6 +1,7 @@
 const path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 function postCss () {
   return {
@@ -22,11 +23,14 @@ module.exports = env => {
       main: './src/main.js'
     },
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, '../cecysgapbackend/public'),
       filename: (cData) => {
         // add hash to file only for main only in production
         return cData.chunk.name === 'main' ? (env ? '[name].[hash].js' : '[name].js') : '[name].js';
       }
+    },
+    optimization: {
+      minimizer: [new OptimizeCSSAssetsPlugin({})],
     },
     module: {
       rules: [
@@ -44,10 +48,12 @@ module.exports = env => {
       ]
     },
     plugins: [
-      new MiniCssExtractPlugin(),
+      new MiniCssExtractPlugin({
+        filename: env ? '[name].[hash].css' : '[name].css'
+      }),
       new HtmlWebpackPlugin({
         template: 'src/index.html'
       })
     ]
-  }
+  };
 };
