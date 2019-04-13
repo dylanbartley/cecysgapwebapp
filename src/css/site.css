@@ -29,12 +29,24 @@ header {
 }
 
 .header-content p {
-  display: none;
   margin-top: 1rem;
+}
+
+.header-content #fireName {
+  display: block;
+}
+
+.header-content #fireDesc {
+  display: none;
 }
 
 .header-content p span {
   vertical-align: bottom;
+}
+
+.i-flame {
+  display: inline-block;
+  transform: scale(0.7);
 }
 
 .header-text {
@@ -109,14 +121,14 @@ header {
 
 .action-container.at-top {
   bottom: 15%;
-  width: 50%;
+  width: 150px;
   left: 50%;
   transform: translateX(-50%);
   opacity: 0.9;
 }
 
 .action-container.at-top .btn.action-button {
-  padding: 23%;
+  padding: 20%;
   border-radius: 50%;
   font-size: 1.6em;
 }
@@ -162,30 +174,30 @@ footer {
 /* ----- */
 
 /* ---- MEDIA QUERIES ----- */
-@media (min-width: 420px) {
-  .action-container.at-top {
-    width: 40%;
-  }
-}
-
 @media (min-width: 576px) {
   .menu-item a {
     float: right;
   }
-  .action-container.at-top {
-    width: 30%;
+}
+
+@media (max-width: 768px) {
+  .header-text {
+    font-size: 1.8em;
   }
 }
 
 @media (min-width: 768px) {
-  .header-content p {
-    display: block;
+  .header-content #fireName {
+    display: inline;
+  }
+  .header-content #fireDesc {
+    display: inline;
+  }
+  .i-flame {
+    transform: scale(1);
   }
   .x-block {
     display: inline;
-  }
-  .action-container.at-top {
-    width: 20%;
   }
   .order-status {
     padding: 0 1em;
@@ -194,12 +206,9 @@ footer {
 
 @media (min-width: 992px) {
   .action-container {
-    width: 69.4em;
+    width: 930px;
     right: inherit;
     left: inherit;
-  }
-  .action-container.at-top .btn.action-button {
-    padding: 30%;
   }
 }
 
@@ -212,6 +221,12 @@ footer {
 @media (min-height: 600px) {
   .app-modal {
     padding: 0;
+  }
+  .action-container.at-top {
+    width: 220px;
+  }
+  .action-container.at-top .btn.action-button {
+    padding: 30%;
   }
 }
 /* ----- */
