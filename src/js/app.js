@@ -75,7 +75,7 @@ var CGApp = (function () {
                 .replace('$desc', dataItem.description));
     
     if (dataItem.hasMore) {
-      item.append(`<a href="#${this.cleanString(dataItem.name)}" onclick="cgapp.openModal('info')">Tell Me More</a>`);
+      item.append(`<a class="card-link text-info" href="#${this.cleanString(dataItem.name)}" onclick="cgapp.openModal('info')">Tell Me More</a>`);
     }
     
     return item;
@@ -361,7 +361,9 @@ var CGApp = (function () {
     
     // other icons
     $('.i-down').html(octicons['chevron-down'].toSVG({ width: 75, height: 100 }));
-    $('.i-flame').html(octicons['flame'].toSVG({ height: 50 }));
+    $('.i-h-flame').html(octicons['flame'].toSVG({ height: 50 }));
+    $('.i-flame').html(octicons['flame'].toSVG({ height: 30 }));
+    $('.i-book').html(octicons['book'].toSVG({ height: 30 }));
 
   return this;
 })();

@@ -11,10 +11,14 @@ body .wrapper {
 /* ----- */
 
 /* ----- HEADER ----- */
+.navbar-brand {
+  margin-bottom: 0;  
+}
+
 header {
   position: relative;
   display: block;
-  background: linear-gradient(#000, #00000054), url('https://firebasestorage.googleapis.com/v0/b/cecysgapwebapp.appspot.com/o/IMG-20190410-WA0000.jpg?alt=media&token=a1deb673-c7a3-4520-88b2-fed612ad0236') no-repeat;
+  background: linear-gradient(#000, #00000054), url('https://firebasestorage.googleapis.com/v0/b/cecysgapwebapp.appspot.com/o/IMG-20190410-WA0000.jpg?alt=media&token=b5fccb4e-bbec-4f31-86b2-ef87b5d0a9db') no-repeat;
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -44,7 +48,7 @@ header {
   vertical-align: bottom;
 }
 
-.i-flame {
+.i-h-flame {
   display: inline-block;
   transform: scale(0.7);
 }
@@ -72,6 +76,20 @@ header {
 .card {
   margin-bottom: 25px;
   overflow: hidden;
+}
+
+.card .card-header {
+  background-color: inherit;
+}
+
+.ch-text {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1.2em;
+}
+
+.card-link.text-info {
+  font-weight: 500;
 }
 
 .menu-item a {
@@ -193,7 +211,7 @@ footer {
   .header-content #fireDesc {
     display: inline;
   }
-  .i-flame {
+  .i-h-flame {
     transform: scale(1);
   }
   .x-block {

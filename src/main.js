@@ -1,6 +1,5 @@
 require('./css/bootstrap.scss');
 require('./css/site.css');
-require('./css/theme.css');
 
 const $ = require('jquery/dist/jquery.slim.min.js');
 
