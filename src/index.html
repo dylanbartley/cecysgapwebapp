@@ -25,7 +25,16 @@
 <body>
   <div class="wrapper">
     <header>
-      <!-- some header image only for desktops -->
+      <div class="header-content text-light">
+        <h1 class="header-text text-justify">Good food to fill your belly</h1>
+        <p>
+          <span class="i-flame"></span>
+          <span>On The Fire!</span>
+          <span id="fireName" class="font-weight-bold mx-2">Beef Soup</span>
+          <span id="fireDesc">Awesome creamy beef pumpkin soup</span>
+        </p>
+      </div>
+      <div class="arrow-cont at-top"><span class="i-down" onclick="hitScroll()"></span></div>
     </header>
     ${require('./partials/nav.html')}
   
@@ -45,10 +54,9 @@
       
       ${require('./partials/footer.html')}
       
-      <div class="action-container">
+      <div class="action-container at-top">
         <button type="button" class="btn btn-lg btn-block btn-secondary action-button" onclick="cgapp.openModal('placeorder')">Order Now</button>
       </div>
-  
     </div>
     
     <!-- pop up modals -->

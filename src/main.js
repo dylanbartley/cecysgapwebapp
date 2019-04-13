@@ -20,6 +20,27 @@ $(function () {
   const thisYr = (new Date()).getFullYear();
   
   $('#copyrightYr').text(startYr === thisYr ? startYr : startYr + '-' + thisYr);
+  
+  // scroll handler function
+  var scrollCutoff = 75;
+  var scrollTimeout = 50;
+  var then = 0;
+  function scrollHandler () {
+    var now = Date.now();
+    if (now >= (then + scrollTimeout)) {
+      if (window.scrollY < scrollCutoff) {
+        $('.action-container, .arrow-cont').addClass('at-top');
+      } else {
+        $('.action-container, .arrow-cont').removeClass('at-top');
+      }
+      then = now;
+    }
+  }
+  
+  // attach handler
+  $(window).scroll(scrollHandler);
+  // run on load
+  scrollHandler();
 });
 
 /**
@@ -30,4 +51,9 @@ window.recapDone = function ( token ) {
 };
 window.recapTimeout = function () {
   window.cgapp.currentForm.check(NAMESPACE);
+};
+
+// because apparently onclick="window.scroll(0, 160)" doesn't work
+window.hitScroll = function () {
+  window.scroll(0, 150);
 };

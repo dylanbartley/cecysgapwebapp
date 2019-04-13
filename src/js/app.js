@@ -6,7 +6,7 @@ var $ = window.jQuery = require('jquery/dist/jquery.slim.min.js');
 // tweaked bootstrap to use globally defined 'jQuery' as opposed to require('jquery')
 require('./lib/bootstrap/bootstrap.js');
 
-const { star } = require('octicons');
+const octicons = require('octicons');
 const moment = require('moment');
 
 // database handler
@@ -274,7 +274,7 @@ var CGApp = (function () {
    */
    var _cg = this;
    
-   // retrieve menu items
+  // retrieve menu items
   fetch(MENUITEMS_ENDPOINT)
     .then(function ( res ) { return res.json(); })
     .then(function ( data ) { _cg.loadMenu(makeItemArray(data)); })
@@ -342,7 +342,7 @@ var CGApp = (function () {
     
   // add star svg icon and attach events
   $('.i-star span')
-    .html(star.toSVG({ height: 20 }));
+    .html(octicons['star'].toSVG({ height: 20 }));
   $('.i-star input')
     .click(function () {
       var cval = parseInt($(this).val());
@@ -358,6 +358,10 @@ var CGApp = (function () {
         }
       });
     });
+    
+    // other icons
+    $('.i-down').html(octicons['chevron-down'].toSVG({ width: 75, height: 100 }));
+    $('.i-flame').html(octicons['flame'].toSVG({ height: 50 }));
 
   return this;
 })();

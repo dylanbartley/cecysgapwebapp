@@ -10,6 +10,52 @@ body .wrapper {
 }
 /* ----- */
 
+/* ----- HEADER ----- */
+header {
+  position: relative;
+  display: block;
+  background: linear-gradient(#000, #00000054), url('https://firebasestorage.googleapis.com/v0/b/cecysgapwebapp.appspot.com/o/IMG-20190410-WA0000.jpg?alt=media&token=a1deb673-c7a3-4520-88b2-fed612ad0236') no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  fill: #f8f9fa;
+}
+
+.header-content {
+  position: absolute;
+  top: 35%;
+  left: 40%;
+  transform: translate(-30%, -50%);
+}
+
+.header-content p {
+  display: none;
+  margin-top: 1rem;
+}
+
+.header-content p span {
+  vertical-align: bottom;
+}
+
+.header-text {
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+.arrow-cont {
+  display: none;
+  position: fixed;
+  bottom: -1em;
+  opacity: 0.6;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.arrow-cont.at-top {
+  display: block;
+}
+/* ----- */
+
 /* ----- SECTION CARDS ----- */
 .card {
   margin-bottom: 25px;
@@ -51,12 +97,28 @@ body .wrapper {
   bottom: 0;
   right: 0;
   left: 0;
+  transition: bottom ease .2s, opacity ease .1s ;
 }
 
 .btn.btn-lg.action-button {
   font-weight: bold;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  text-transform: uppercase;
+}
+
+.action-container.at-top {
+  bottom: 15%;
+  width: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.9;
+}
+
+.action-container.at-top .btn.action-button {
+  padding: 23%;
+  border-radius: 50%;
+  font-size: 1.6em;
 }
 /* ----- */
 
@@ -100,26 +162,50 @@ footer {
 /* ----- */
 
 /* ---- MEDIA QUERIES ----- */
-@media (min-width: 1200px) {
-  .action-container {
-    width: 69.4em;
-    right: inherit;
-    left: inherit;
-  }
-}
-
-@media (min-width: 768px) {
-  .x-block {
-    display: inline;
-  }
-  .order-status {
-    padding: 0 1em;
+@media (min-width: 420px) {
+  .action-container.at-top {
+    width: 40%;
   }
 }
 
 @media (min-width: 576px) {
   .menu-item a {
     float: right;
+  }
+  .action-container.at-top {
+    width: 30%;
+  }
+}
+
+@media (min-width: 768px) {
+  .header-content p {
+    display: block;
+  }
+  .x-block {
+    display: inline;
+  }
+  .action-container.at-top {
+    width: 20%;
+  }
+  .order-status {
+    padding: 0 1em;
+  }
+}
+
+@media (min-width: 992px) {
+  .action-container {
+    width: 69.4em;
+    right: inherit;
+    left: inherit;
+  }
+  .action-container.at-top .btn.action-button {
+    padding: 30%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .header-text {
+    letter-spacing: 2px;
   }
 }
 
