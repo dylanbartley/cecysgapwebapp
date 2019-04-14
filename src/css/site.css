@@ -72,6 +72,20 @@ header {
 }
 /* ----- */
 
+/* ----- MAIN ----- */
+section.main div {
+  font-size: 1.3em;
+}
+
+section.main div:after {
+  content: " ";
+  display: block;
+  margin: auto;
+  height: 2px;
+  width: 150px;
+}
+/* ----- */
+
 /* ----- SECTION CARDS ----- */
 .card {
   margin-bottom: 25px;
@@ -219,6 +233,9 @@ footer {
   }
   .order-status {
     padding: 0 1em;
+  }
+  section.main div {
+    width: 70%;
   }
 }
 

@@ -56,3 +56,7 @@ $card-border-width: 0;
 .i-star.selected svg {
   fill: $pink;  
 }
+
+.main div:after {
+  background-color: $primary;
+}
