@@ -56,7 +56,10 @@ var ForMan = (function () {
     } else if (recapToken === false) {
       this.isRecapReady = false;
       this.token = null;
-      grecaptcha.reset(this.recapId);
+      if (this.recapId) { 
+        grecaptcha.reset(this.recapId);
+        this.recapId - null;
+      }
     }
 
     if (!this.form) { return; }
@@ -104,8 +107,10 @@ var ForMan = (function () {
     this.isInputReady = false;
     
     if (!this.form) { return; }
-    
-    grecaptcha.reset(this.recapId);
+    if (this.recapId) { 
+        grecaptcha.reset(this.recapId);
+        this.recapId - null;
+      }
     
     this.form[0].reset();
     this.form.find('button').attr('disabled', 'disabled');
