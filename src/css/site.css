@@ -251,6 +251,9 @@ footer {
 }
 
 @media (min-width: 1200px) {
+  .action-container {
+    width: 1110px;
+  }
   .header-text {
     letter-spacing: 2px;
   }
