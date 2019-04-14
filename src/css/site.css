@@ -245,6 +245,9 @@ footer {
     right: inherit;
     left: inherit;
   }
+  section div.card {
+    margin-bottom: 4em;
+  }
 }
 
 @media (min-width: 1200px) {
