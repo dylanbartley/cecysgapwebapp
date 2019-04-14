@@ -259,6 +259,25 @@ footer {
   }
 }
 
+@media (max-height: 380px) {
+  .header-content {
+    top: 20%;
+    left: 40%;
+    transform: translateX(-60%);
+  }
+  .action-container.at-top {
+    width: 120px;
+    bottom: 20%;
+  }
+  .action-container.at-top .btn.action-button {
+    padding: 18%;
+    font-size: 1.4em;
+  }
+  .arrow-cont.at-top {
+    transform: scale(0.6) translateX(-60px);
+  }
+}
+
 @media (min-height: 600px) {
   .app-modal {
     padding: 0;
