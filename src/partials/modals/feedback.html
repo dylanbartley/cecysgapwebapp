@@ -6,9 +6,10 @@
       </div>
       <div class="card-body bg-primary-light">
         <h4 class="card-title">Tell Us Your Thoughts and Concerns</h4>
+        
         <form id="feedbackForm">
-          <div>What's this about?</div>
-          <div class="mb-3">
+          <div class="mb-3 pt-3">
+            <span class="x-block mr-2">What's this about?</span>
             <div class="custom-control custom-radio custom-control-inline x-block">
               <input type="radio" class="custom-control-input" id="feedbackType1" name="category" value="menu" required>
               <label class="custom-control-label" for="feedbackType1">Menu Items</label>
@@ -23,29 +24,32 @@
             </div>
           </div>
           
-          <div>How'd you rate us?</div>
-          <div class="mb-3 d-flex justify-content-around" style="max-width:200px">
-            <label class="i-star selected">
-              <span></span>
-              <input type="radio" name="rating" value="1" required checked>
-            </label>
-            <label class="i-star">
-              <span></span>
-              <input type="radio" name="rating" value="2" required>
-            </label>
-            <label class="i-star">
-              <span></span>
-              <input type="radio" name="rating" value="3" required>
-            </label>
-            <label class="i-star">
-              <span></span>
-              <input type="radio" name="rating" value="4" required>
-            </label>
-            <label class="i-star">
-              <span></span>
-              <input type="radio" name="rating" value="5" required>
-            </label>
+          <div class="mb-3 pt-3">
+            <span class="d-block mr-2">How'd you rate us?</span>
+            <div class="d-flex justify-content-around" style="max-width:200px">
+              <label class="i-star selected">
+                <span></span>
+                <input type="radio" name="rating" value="1" required checked>
+              </label>
+              <label class="i-star">
+                <span></span>
+                <input type="radio" name="rating" value="2" required>
+              </label>
+              <label class="i-star">
+                <span></span>
+                <input type="radio" name="rating" value="3" required>
+              </label>
+              <label class="i-star">
+                <span></span>
+                <input type="radio" name="rating" value="4" required>
+              </label>
+              <label class="i-star">
+                <span></span>
+                <input type="radio" name="rating" value="5" required>
+              </label>
+            </div>
           </div>
+          
           <div class="mb-3">
             <textarea id="feedback" class="form-control form-control-sm" rows="5" required placeholder="Enter Feedback Here ..."></textarea>
           </div>
