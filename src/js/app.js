@@ -272,7 +272,24 @@ var CGApp = (function () {
   /**
    * Post Definition Tasks
    */
-   var _cg = this;
+  var _cg = this;
+   
+  // set up links
+  $('.mod-open').click(function ( e ) {
+    var modal = $(this).attr('data-target');
+    if (modal) {
+      _cg.openModal(modal);
+    }
+    //
+    e.preventDefault();
+    return false;
+  });
+  $('.mod-close').click(function ( e ) {
+    _cg.closeModal();
+    //
+    e.preventDefault();
+    return false;
+  });
    
   // retrieve menu items
   fetch(MENUITEMS_ENDPOINT)
